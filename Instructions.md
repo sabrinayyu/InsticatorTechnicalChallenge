@@ -85,7 +85,7 @@ response:
 Create the Trivia Question for the Site
 >curl --header "Content-Type: application/json" \
   	 --request POST \
-  	 --data '{"siteId":1, "question": "how many toes does a pig have?"}' \
+  	 --data '{"siteId":1, "question": "how many toes does a pig have?", "type": "TRIVIA"}' \
   	 http://localhost:8080/questions
 
 
@@ -98,9 +98,11 @@ Create the Trivia Question for the Site
 
   "question": "how many toes does a pig have?",
 
-  "createdAt": "2020-07-21T23:53:30.838+0000",
+  "type": "TRIVIA",
 
-  "updatedAt": "2020-07-21T23:53:30.838+0000"
+  "createdAt": "2020-07-24T02:43:10.453+0000",
+
+  "updatedAt": "2020-07-24T02:43:10.453+0000"
 
 }
 

@@ -41,6 +41,10 @@ public class QuestionAnswer implements Serializable {
 	@Column(nullable = false, columnDefinition = "TINYINT(1)")
 	private boolean isCorrectAnswer;
 
+	//isRowOption is used to distinguish row([:][0])/col([0][:]) options of matrix question
+	@Column(nullable = false, columnDefinition = "TINYINT(1) default 1")
+	private boolean isRowOption;
+
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
@@ -78,12 +82,20 @@ public class QuestionAnswer implements Serializable {
 		this.answer = Answer;
 	}
 
-	public boolean isCorrectAnswer() {
+	public boolean getIsCorrectAnswer() {
 		return isCorrectAnswer;
 	}
 
 	public void setIsCorrectAnswer(boolean isCorrectAnswer) {
 		this.isCorrectAnswer = isCorrectAnswer;
+	}
+
+	public boolean getIsRowOption() {
+		return isRowOption;
+	}
+
+	public void setIsRowOption(boolean isRowOption) {
+		this.isRowOption = isRowOption;
 	}
 
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -102,6 +114,7 @@ public class QuestionAnswer implements Serializable {
 		if (o == null || getClass() != o.getClass()) return false;
 		final QuestionAnswer that = (QuestionAnswer) o;
 		return isCorrectAnswer == that.isCorrectAnswer &&
+				isRowOption == that.isRowOption &&
 				Objects.equals(id, that.id) &&
 				Objects.equals(question, that.question) &&
 				Objects.equals(answer, that.answer) &&
@@ -111,6 +124,6 @@ public class QuestionAnswer implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, question, answer, isCorrectAnswer, createdAt, updatedAt);
+		return Objects.hash(id, question, answer, isCorrectAnswer, isRowOption, createdAt, updatedAt);
 	}
 }

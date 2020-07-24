@@ -15,6 +15,8 @@ public class QuestionDTO {
 
 	private String question;
 
+	private String type;
+
 	private Date createdAt;
 
 	private Date updatedAt;
@@ -24,6 +26,7 @@ public class QuestionDTO {
 		obj.setSiteId(question.getSite().getSiteId());
 		obj.setQuestionId(question.getQuestionId());
 		obj.setQuestion(question.getQuestion());
+		obj.setType(question.getType());
 		obj.setUpdatedAt(question.getUpdatedAt());
 		obj.setCreatedAt(question.getCreatedAt());
 
@@ -44,6 +47,7 @@ public class QuestionDTO {
 		final Question newQ = new Question();
 		newQ.setSite(site);
 		newQ.setQuestion(incomingQuestion.getQuestion());
+		newQ.setType(incomingQuestion.getType());
 
 		return newQ;
 	}
@@ -62,6 +66,14 @@ public class QuestionDTO {
 
 	public void setQuestion(final String question) {
 		this.question = question;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(final String type) {
+		this.type = type;
 	}
 
 	public Date getCreatedAt() {

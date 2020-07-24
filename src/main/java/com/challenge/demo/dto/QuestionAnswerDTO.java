@@ -17,6 +17,8 @@ public class QuestionAnswerDTO {
 
 	private boolean isCorrectAnswer;
 
+	private boolean isRowOption;
+
 	private Date createdAt;
 
 	private Date updatedAt;
@@ -25,6 +27,7 @@ public class QuestionAnswerDTO {
 		final QuestionAnswer newQa = new QuestionAnswer();
 		newQa.setAnswer(newQADto.getAnswer());
 		newQa.setIsCorrectAnswer(newQADto.getIsCorrectAnswer());
+		newQa.setIsRowOption(newQADto.getIsRowOption());
 		newQa.setQuestion(question);
 
 		return newQa;
@@ -35,7 +38,8 @@ public class QuestionAnswerDTO {
 
 		newQaDto.setId(save.getId());
 		newQaDto.setAnswer(save.getAnswer());
-		newQaDto.setIsCorrectAnswer(save.isCorrectAnswer());
+		newQaDto.setIsCorrectAnswer(save.getIsCorrectAnswer());
+		newQaDto.setIsRowOption(save.getIsRowOption());
 		newQaDto.setCreatedAt(save.getCreatedAt());
 		newQaDto.setUpdatedAt(save.getUpdatedAt());
 		newQaDto.setQuestionId(save.getQuestion().getQuestionId());
@@ -81,6 +85,14 @@ public class QuestionAnswerDTO {
 
 	public void setIsCorrectAnswer(final boolean correctAnswer) {
 		isCorrectAnswer = correctAnswer;
+	}
+
+	public boolean getIsRowOption() {
+		return isRowOption;
+	}
+
+	public void setIsRowOption(final boolean isRowOption) {
+		this.isRowOption = isRowOption;
 	}
 
 	public Date getCreatedAt() {

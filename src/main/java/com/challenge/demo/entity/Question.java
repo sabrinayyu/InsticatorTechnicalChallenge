@@ -46,6 +46,10 @@ public class Question implements Serializable {
 	@Length(min = 0, max = 250)
 	private String question;
 
+	@NotBlank
+	@Length(min = 0, max = 20)
+	private String type;
+
 	@OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
 	private List<QuestionAnswer> answers = new ArrayList<>();
 
@@ -66,6 +70,10 @@ public class Question implements Serializable {
 	public void setQuestion(String question) {
 		this.question = question;
 	}
+
+	public String getType() { return type; }
+
+	public void setType(String type) { this.type = type; }
 
 	public Long getQuestionId() {
 		return questionId;
@@ -101,6 +109,7 @@ public class Question implements Serializable {
 		return Objects.equals(questionId, question1.questionId) &&
 				Objects.equals(site, question1.site) &&
 				Objects.equals(question, question1.question) &&
+				Objects.equals(type, question1.type) &&
 				Objects.equals(answers, question1.answers) &&
 				Objects.equals(createdAt, question1.createdAt) &&
 				Objects.equals(updatedAt, question1.updatedAt);
@@ -108,6 +117,6 @@ public class Question implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(questionId, site, question, answers, createdAt, updatedAt);
+		return Objects.hash(questionId, site, question, type, answers, createdAt, updatedAt);
 	}
 }
