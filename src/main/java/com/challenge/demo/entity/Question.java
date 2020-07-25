@@ -1,24 +1,13 @@
 package com.challenge.demo.entity;
 
+import com.challenge.demo.enums.QuestionType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,9 +35,9 @@ public class Question implements Serializable {
 	@Length(min = 0, max = 250)
 	private String question;
 
-	@NotBlank
-	@Length(min = 0, max = 20)
-	private String type;
+//	@NotBlank
+	@Enumerated(EnumType.STRING)
+	private QuestionType type;
 
 	@OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
 	private List<QuestionAnswer> answers = new ArrayList<>();
@@ -71,9 +60,9 @@ public class Question implements Serializable {
 		this.question = question;
 	}
 
-	public String getType() { return type; }
+	public QuestionType getType() { return type; }
 
-	public void setType(String type) { this.type = type; }
+	public void setType(QuestionType type) { this.type = type; }
 
 	public Long getQuestionId() {
 		return questionId;

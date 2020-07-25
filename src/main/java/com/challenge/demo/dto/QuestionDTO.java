@@ -2,6 +2,7 @@ package com.challenge.demo.dto;
 
 import com.challenge.demo.entity.Question;
 import com.challenge.demo.entity.Site;
+import com.challenge.demo.enums.QuestionType;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,7 +27,7 @@ public class QuestionDTO {
 		obj.setSiteId(question.getSite().getSiteId());
 		obj.setQuestionId(question.getQuestionId());
 		obj.setQuestion(question.getQuestion());
-		obj.setType(question.getType());
+		obj.setType(question.getType().toValue());
 		obj.setUpdatedAt(question.getUpdatedAt());
 		obj.setCreatedAt(question.getCreatedAt());
 
@@ -47,7 +48,7 @@ public class QuestionDTO {
 		final Question newQ = new Question();
 		newQ.setSite(site);
 		newQ.setQuestion(incomingQuestion.getQuestion());
-		newQ.setType(incomingQuestion.getType());
+		newQ.setType(QuestionType.forValue(incomingQuestion.getType()));
 
 		return newQ;
 	}
@@ -72,9 +73,7 @@ public class QuestionDTO {
 		return type;
 	}
 
-	public void setType(final String type) {
-		this.type = type;
-	}
+	public void setType(final String type) { this.type = type; }
 
 	public Date getCreatedAt() {
 		return createdAt;
