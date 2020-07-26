@@ -1,6 +1,8 @@
 package com.challenge.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -34,6 +36,7 @@ public class QuestionAnswer implements Serializable {
 
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)
 	@JoinColumn(name = "question_id", referencedColumnName = "question_id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Question question;
 
 	private String answer;

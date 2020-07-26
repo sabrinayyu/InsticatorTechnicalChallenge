@@ -24,8 +24,8 @@ public class User implements Serializable {
     @Column(nullable = false, name = "user_uuid")
     private UUID userUUID;
 
-    @Column(nullable = false, name = "answer_round", columnDefinition = "default 0")
-    private Integer answerRound;
+    @Column(nullable = false, name = "cur_answer_round", columnDefinition = "default 0")
+    private Integer curAnswerRound;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -54,11 +54,11 @@ public class User implements Serializable {
     }
 
     public Integer getAnswerRound() {
-        return answerRound;
+        return curAnswerRound;
     }
 
     public void setAnswerRound(Integer answerRound) {
-        this.answerRound = answerRound;
+        this.curAnswerRound = answerRound;
     }
 
     public Date getCreatedAt() {
@@ -76,13 +76,13 @@ public class User implements Serializable {
         User user = (User) o;
         return Objects.equals(userId, user.userId) &&
                 Objects.equals(userUUID, user.userUUID) &&
-                Objects.equals(answerRound, user.answerRound) &&
+                Objects.equals(curAnswerRound, user.curAnswerRound) &&
                 Objects.equals(createdAt, user.createdAt) &&
                 Objects.equals(updatedAt, user.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, userUUID, answerRound, createdAt, updatedAt);
+        return Objects.hash(userId, userUUID, curAnswerRound, createdAt, updatedAt);
     }
 }
