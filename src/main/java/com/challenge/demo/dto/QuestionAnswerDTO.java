@@ -11,7 +11,7 @@ public class QuestionAnswerDTO {
 
 	private Long id;
 
-	private Long questionId;
+//	private Long questionId;
 
 	private String answer;
 
@@ -19,9 +19,9 @@ public class QuestionAnswerDTO {
 
 	private boolean isRowOption;
 
-	private Date createdAt;
-
-	private Date updatedAt;
+//	private Date createdAt;
+//
+//	private Date updatedAt;
 
 	public static QuestionAnswer transform(final QuestionAnswerDTO newQADto, final Question question) {
 		final QuestionAnswer newQa = new QuestionAnswer();
@@ -40,9 +40,8 @@ public class QuestionAnswerDTO {
 		newQaDto.setAnswer(save.getAnswer());
 		newQaDto.setIsCorrectAnswer(save.getIsCorrectAnswer());
 		newQaDto.setIsRowOption(save.getIsRowOption());
-		newQaDto.setCreatedAt(save.getCreatedAt());
-		newQaDto.setUpdatedAt(save.getUpdatedAt());
-		newQaDto.setQuestionId(save.getQuestion().getQuestionId());
+//		newQaDto.setCreatedAt(save.getCreatedAt());
+//		newQaDto.setQuestionId(save.getQuestion().getQuestionId());
 
 		return newQaDto;
 	}
@@ -63,13 +62,13 @@ public class QuestionAnswerDTO {
 		this.id = id;
 	}
 
-	public Long getQuestionId() {
-		return questionId;
-	}
-
-	public void setQuestionId(final Long questionId) {
-		this.questionId = questionId;
-	}
+//	public Long getQuestionId() {
+//		return questionId;
+//	}
+//
+//	public void setQuestionId(final Long questionId) {
+//		this.questionId = questionId;
+//	}
 
 	public String getAnswer() {
 		return answer;
@@ -95,7 +94,7 @@ public class QuestionAnswerDTO {
 		this.isRowOption = isRowOption;
 	}
 
-	public Date getCreatedAt() {
+/*	public Date getCreatedAt() {
 		return createdAt;
 	}
 
@@ -109,5 +108,5 @@ public class QuestionAnswerDTO {
 
 	public void setUpdatedAt(final Date updatedAt) {
 		this.updatedAt = updatedAt;
-	}
+	}*/
 }

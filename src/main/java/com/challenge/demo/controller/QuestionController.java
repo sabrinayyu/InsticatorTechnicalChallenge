@@ -2,26 +2,21 @@ package com.challenge.demo.controller;
 
 import com.challenge.demo.dto.QuestionAnswerDTO;
 import com.challenge.demo.dto.QuestionDTO;
+import com.challenge.demo.dto.WholeQuestionDTO;
 import com.challenge.demo.entity.Question;
 import com.challenge.demo.entity.QuestionAnswer;
+import com.challenge.demo.entity.Site;
 import com.challenge.demo.repository.QuestionAnswerRepository;
 import com.challenge.demo.repository.QuestionRepository;
 import com.challenge.demo.repository.SiteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/questions")
@@ -110,4 +105,34 @@ public class QuestionController {
 				.map(question -> ResponseEntity.ok(QuestionAnswerDTO.build(question.getAnswers())))
 				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
+
+	//test wholequestion
+	@GetMapping("/{id}/wholequestion")
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<WholeQuestionDTO> getWholeQuestion(@PathVariable(value = "id") Long questionId) {
+		return questionRepository
+				.findById(questionId)
+				.map(question -> ResponseEntity.ok(WholeQuestionDTO.build(question, question.getAnswers())))
+				.orElseGet(() -> ResponseEntity.notFound().build());
+	}
+
+
+
+//	@PostMapping("/{siteUUID}/{userUUID}/random")
+//	public ResponseEntity<QuestionDescriptionDTO> getRandomQuestion(@PathVariable(value = "siteUUID") UUID siteUUID, @PathVariable(value = "userUUID") UUID userUUID) {
+//		Site site = siteRepository.findByUuid(siteUUID);
+//		return qaRepository
+//				.findSiteQuestions(site.getSiteId())
+//
+//
+//	}
+
+//	@PostMapping("/{siteUUID}/{userUUID}/random")
+//	public ResponseEntity<List<QuestionAnswer>> getRandomQuestion(@PathVariable(value = "siteUUID") UUID siteUUID, @PathVariable(value = "userUUID") UUID userUUID) {
+//		Site site = siteRepository.findByUuid(siteUUID);
+//		return qaRepository
+//				.findBysiteId(site.getSiteId())
+//				.map(questionAnswer -> ResponseEntity.ok(questionAnswer))
+//				.orElseGet(() -> ResponseEntity.notFound().build());;
+//	}
 }

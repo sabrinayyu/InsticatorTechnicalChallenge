@@ -14,13 +14,13 @@ public class QuestionDTO {
 
 	private Long siteId;
 
-	private String question;
-
 	private String type;
 
-	private Date createdAt;
+	private String question;
 
-	private Date updatedAt;
+//	private Date createdAt;
+//
+//	private Date updatedAt;
 
 	public static QuestionDTO build(Question question) {
 		final QuestionDTO obj = new QuestionDTO();
@@ -28,8 +28,8 @@ public class QuestionDTO {
 		obj.setQuestionId(question.getQuestionId());
 		obj.setQuestion(question.getQuestion());
 		obj.setType(question.getType().toValue());
-		obj.setUpdatedAt(question.getUpdatedAt());
-		obj.setCreatedAt(question.getCreatedAt());
+//		obj.setUpdatedAt(question.getUpdatedAt());
+//		obj.setCreatedAt(question.getCreatedAt());
 
 		return obj;
 	}
@@ -75,21 +75,21 @@ public class QuestionDTO {
 
 	public void setType(final String type) { this.type = type; }
 
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(final Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(final Date updatedAt) {
-		this.updatedAt = updatedAt;
-	}
+//	public Date getCreatedAt() {
+//		return createdAt;
+//	}
+//
+//	public void setCreatedAt(final Date createdAt) {
+//		this.createdAt = createdAt;
+//	}
+//
+//	public Date getUpdatedAt() {
+//		return updatedAt;
+//	}
+//
+//	public void setUpdatedAt(final Date updatedAt) {
+//		this.updatedAt = updatedAt;
+//	}
 
 	public Long getQuestionId() {
 		return questionId;
