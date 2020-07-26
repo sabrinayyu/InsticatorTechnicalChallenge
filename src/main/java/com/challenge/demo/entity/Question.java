@@ -19,7 +19,6 @@ import java.util.Objects;
 @Table(name = "question")
 @EntityListeners(AuditingEntityListener.class)
 public class Question implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -35,7 +34,6 @@ public class Question implements Serializable {
 	@Length(min = 0, max = 250)
 	private String question;
 
-//	@NotBlank
 	@Enumerated(EnumType.STRING)
 	private QuestionType type;
 

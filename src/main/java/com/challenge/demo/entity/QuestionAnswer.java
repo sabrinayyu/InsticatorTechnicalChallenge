@@ -41,8 +41,8 @@ public class QuestionAnswer implements Serializable {
 	@Column(nullable = false, columnDefinition = "TINYINT(1)")
 	private boolean isCorrectAnswer;
 
-	//isRowOption is used to distinguish row([:][0])/col([0][:]) options of matrix question
-	@Column(nullable = false, columnDefinition = "TINYINT(1) default 1")
+	//isRowOption is used to distinguish col([:][0])/row([0][:]) options of matrix question
+	@Column(nullable = false, columnDefinition = "TINYINT(1)")
 	private boolean isRowOption;
 
 	@Column(nullable = false, updatable = false)
