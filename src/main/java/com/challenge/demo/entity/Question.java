@@ -2,6 +2,8 @@ package com.challenge.demo.entity;
 
 import com.challenge.demo.enums.QuestionType;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -19,7 +21,6 @@ import java.util.Objects;
 @Table(name = "question")
 @EntityListeners(AuditingEntityListener.class)
 public class Question implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -29,13 +30,13 @@ public class Question implements Serializable {
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "site_id", referencedColumnName = "site_id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Site site;
 
 	@NotBlank
 	@Length(min = 0, max = 250)
 	private String question;
 
-//	@NotBlank
 	@Enumerated(EnumType.STRING)
 	private QuestionType type;
 
