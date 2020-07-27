@@ -31,9 +31,9 @@ public enum QuestionType {
 
     @JsonCreator
     public static QuestionType forValue (String value) throws NoSuchFieldException {
-        //todo Exception >> null
+
         if (!questionTypeMap.containsKey(value))
-            throw new NoSuchFieldException();
+            throw new NoSuchFieldException("wrong question type!");
 
         return questionTypeMap.get(StringUtils.lowerCase(value));
     }
