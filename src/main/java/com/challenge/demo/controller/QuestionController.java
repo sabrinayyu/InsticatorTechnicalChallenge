@@ -119,7 +119,7 @@ public class QuestionController {
 
 
 
-//	//test wholequestion
+//	//test wholequestion, worked
 //	@GetMapping("/{id}/wholequestion")
 //	@ResponseStatus(HttpStatus.OK)
 //	public ResponseEntity<WholeQuestionDTO> getWholeQuestion(@PathVariable(value = "id") Long questionId) {

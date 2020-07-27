@@ -1,12 +1,5 @@
 package com.challenge.demo.repository;
 
-import com.challenge.demo.entity.AnswerHistory;
-<<<<<<< Updated upstream
-import com.challenge.demo.entity.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface UserRepository extends JpaRepository<User, Long> {
-=======
 import com.challenge.demo.entity.Site;
 import com.challenge.demo.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,6 +13,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUuid(UUID userUUID);
 
     //Optional<User> findByUserUUID(UUID userUUID);
->>>>>>> Stashed changes
 
 }

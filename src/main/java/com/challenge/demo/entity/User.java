@@ -6,13 +6,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-<<<<<<< Updated upstream
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
-=======
 import java.util.*;
->>>>>>> Stashed changes
 
 @Entity
 @Table(name = "user")
@@ -31,12 +28,10 @@ public class User implements Serializable {
     @Column(nullable = false, name = "cur_answer_round", columnDefinition = "default 0")
     private Integer curAnswerRound;
 
-<<<<<<< Updated upstream
-=======
+
 //    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 //    private List<AnswerHistory> answersHistory = new ArrayList<>();
 
->>>>>>> Stashed changes
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
@@ -63,19 +58,12 @@ public class User implements Serializable {
         this.userUUID = userUUID;
     }
 
-<<<<<<< Updated upstream
-    public Integer getAnswerRound() {
-        return curAnswerRound;
-    }
 
-    public void setAnswerRound(Integer answerRound) {
-=======
     public Integer getCurAnswerRound() {
         return curAnswerRound;
     }
 
     public void setCurAnswerRound(Integer answerRound) {
->>>>>>> Stashed changes
         this.curAnswerRound = answerRound;
     }
 
