@@ -48,8 +48,14 @@ public class QuestionController {
 		return siteRepository
 				.findById(incomingQuestion.getSiteId())
 				.map(site -> {
-					final Question newQ = QuestionDTO.createQuestion(incomingQuestion, site);
-					return new ResponseEntity<>(QuestionDTO.build(questionRepository.save(newQ)), HttpStatus.CREATED);
+					try {
+						final Question newQ;
+						newQ = QuestionDTO.createQuestion(incomingQuestion, site);
+						return new ResponseEntity<>(QuestionDTO.build(questionRepository.save(newQ)), HttpStatus.CREATED);
+					} catch (NoSuchFieldException e) {
+						e.printStackTrace();
+						return new ResponseEntity<>(new QuestionDTO(), HttpStatus.BAD_REQUEST);
+					}
 				})
 				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
@@ -118,7 +124,6 @@ public class QuestionController {
 	}
 
 
-
 //	//test wholequestion, worked
 //	@GetMapping("/{id}/wholequestion")
 //	@ResponseStatus(HttpStatus.OK)
@@ -128,47 +133,27 @@ public class QuestionController {
 //				.map(question -> ResponseEntity.ok(WholeQuestionDTO.build(question, question.getAnswers())))
 //				.orElseGet(() -> ResponseEntity.notFound().build());
 //	}
-//
-//	 @PostMapping("/site")
-//	public ResponseEntity<List<WholeQuestionDTO>> getAllUniqueQuestions(@RequestBody UniqueGeneratorParamDTO uniqueGeneratorParamDTO) {
-//		//todo handle invalid siteUUID
-//		Site site = siteRepository.findByUuid(uniqueGeneratorParamDTO.getSiteUUID());
-//
-//		if (Objects.isNull(site)) {
-//			return ResponseEntity.notFound().build();
-//		}
-//		return questionRepository
-//				.findSiteQuestions(site.getSiteId())
-//				.forEach(question -> ResponseEntity.ok(WholeQuestionDTO.build(question, question.getAnswers())))
-//				.orElseGet(() -> ResponseEntity.notFound().build());
-//	}
 
+
+// user table could not be added
 //	@PostMapping("/unique")
 //	public ResponseEntity<WholeQuestionDTO> getUniqueQuestion(@RequestBody UniqueGeneratorParamDTO uniqueGeneratorParamDTO) {
-////		try {
-////			UUID siteUUID = UUID.fromString(uniqueGeneratorParamDTO.getSiteUUID());
-////			UUID userUUID = UUID.fromString(uniqueGeneratorParamDTO.getUserUUID());
-////			System.out.println("1 siteUUID:" + siteUUID);
-////			return ResponseEntity.ok(questionService.getUniqueWholeQuestion(siteUUID, userUUID));
-////		} catch (Exception e) {
-////			System.out.println("There is something wrong for /questions/unique" + e.getMessage());
-////			return ResponseEntity.badRequest().build();
-////		}
+//		try {
+//			UUID siteUUID = UUID.fromString(uniqueGeneratorParamDTO.getSiteUUID());
+//			UUID userUUID = UUID.fromString(uniqueGeneratorParamDTO.getUserUUID());
+//			System.out.println("1 siteUUID:" + siteUUID);
+//			return ResponseEntity.ok(questionService.getUniqueWholeQuestion(siteUUID, userUUID));
+//		} catch (NullPointerException e) {
+//			System.out.println("Null in requestBody of /unique ");
+//		} catch (Exception e) {
+//			System.out.println("There is something wrong for /questions/unique" + e.getMessage());
+//			return ResponseEntity.badRequest().build();
+//		}
+//
 //	}
 
-	@PostMapping("/unique")
-	public ResponseEntity<WholeQuestionDTO> getUniqueQuestion(@RequestBody UniqueGeneratorParamDTO uniqueGeneratorParamDTO) {
-		try {
-			UUID siteUUID = UUID.fromString(uniqueGeneratorParamDTO.getSiteUUID());
-			UUID userUUID = UUID.fromString(uniqueGeneratorParamDTO.getUserUUID());
-			System.out.println("1 siteUUID:" + siteUUID);
-			return ResponseEntity.ok(questionService.getUniqueWholeQuestion(siteUUID, userUUID));
-		} catch (Exception e) {
-			System.out.println("There is something wrong for /questions/unique" + e.getMessage());
-			return ResponseEntity.badRequest().build();
-		}
+	//todo
+	//@PostMapping("/useranswer")
 
 	}
-
-	//@PostMapping("/useranswer")
 

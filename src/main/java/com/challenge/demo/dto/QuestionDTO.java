@@ -44,7 +44,7 @@ public class QuestionDTO {
 		return ret;
 	}
 
-	public static Question createQuestion(final QuestionDTO incomingQuestion, final Site site) {
+	public static Question createQuestion(final QuestionDTO incomingQuestion, final Site site) throws NoSuchFieldException {
 		final Question newQ = new Question();
 		newQ.setSite(site);
 		newQ.setQuestion(incomingQuestion.getQuestion());

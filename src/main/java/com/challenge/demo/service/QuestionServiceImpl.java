@@ -30,28 +30,6 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     AnswerHistoryRepository answerHistoryRepository;
 
-//    @Override
-//    public boolean saveQuestionInfo(Object object) {
-//
-//        // 校验type是否存在枚举类中
-//
-//        // 校验questionId是否存在
-//
-//        // 校验question表是否存在
-//        List<Question> siteQuestions = questionRepository.findSiteQuestions(0L).get();
-//        if(Objects.nonNull(siteQuestions)){
-//            return false;
-//        }
-//
-//        // 保存question表
-//        questionRepository.save(new Question());
-//
-//        // 保存questionAnswer表
-//        questionAnswerRepository.save(new QuestionAnswer());
-//
-//        return true;
-//
-//    }
 
     @Override
     public WholeQuestionDTO getUniqueWholeQuestion(UUID siteUUID, UUID userUUID) {
@@ -122,8 +100,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     public WholeQuestionDTO getWholeQuestion(Question question) {
         //todo not null check
-        //todo try catch NoSuchElementException from get in controller
-        //Question question = questionRepository.findById(questionId).get();
+
         return  WholeQuestionDTO.build(question, question.getAnswers());
     }
 

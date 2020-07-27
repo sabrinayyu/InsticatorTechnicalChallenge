@@ -8,7 +8,5 @@ import java.util.UUID;
 @Service
 public interface QuestionService {
 
-//    boolean saveQuestionInfo(Object object);
-
     WholeQuestionDTO getUniqueWholeQuestion(UUID siteUUID, UUID userUUID);
 }
