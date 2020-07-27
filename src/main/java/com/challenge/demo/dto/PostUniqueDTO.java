@@ -6,16 +6,20 @@ import com.challenge.demo.enums.QuestionType;
 
 import java.util.UUID;
 
-public class UniqueGeneratorParamDTO {
+/**
+ * for request body of /questions/unique
+ */
+
+public class PostUniqueDTO {
     private String sitecpUUID;
 
     private String siteUUID;
 
-    public String getsitecpUUID() {
+    public String getSitecpUUID() {
         return sitecpUUID;
     }
 
-    public void setsitecpUUID(String sitecpUUID) {
+    public void setSitecpUUID(String sitecpUUID) {
         this.sitecpUUID = sitecpUUID;
     }
 
@@ -27,6 +31,7 @@ public class UniqueGeneratorParamDTO {
         this.siteUUID = siteUUID;
     }
 
+    //todo create site and createSitecp here?
 //    public static User createUser(final QuestionDTO incomingQuestion, final Site site) {
 //        final Question newQ = new Question();
 //        newQ.setSite(site);
