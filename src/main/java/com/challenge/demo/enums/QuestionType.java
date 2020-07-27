@@ -11,6 +11,8 @@ import java.util.Map;
 public enum QuestionType {
     /**
      * question type
+     * correctAnswerMin:
+     *
      */
 
     TRIVIA (1, 1),
@@ -29,6 +31,7 @@ public enum QuestionType {
 
     @JsonCreator
     public static QuestionType forValue(String value) {
+
         return questionTypeMap.get(StringUtils.lowerCase(value));
     }
 
