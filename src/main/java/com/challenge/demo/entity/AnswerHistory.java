@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * user's answer history
+ * answer history
  */
 @Entity
 @Table(name = "answer_history")
@@ -38,9 +38,9 @@ public class AnswerHistory implements Serializable {
     private Long AnswerHistoryId;
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "sitecp_id", referencedColumnName = "sitecp_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private User user;
+    private Sitecp sitecp;
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id", referencedColumnName = "question_id")
@@ -76,12 +76,12 @@ public class AnswerHistory implements Serializable {
         AnswerHistoryId = answerHistoryId;
     }
 
-    public User getUserId() {
-        return user;
+    public Sitecp getUserId() {
+        return sitecp;
     }
 
-    public void setUserId(final User user) {
-        this.user = user;
+    public void setUserId(final Sitecp sitecp) {
+        this.sitecp = sitecp;
     }
 
     public Question getQuestion() {
@@ -127,7 +127,7 @@ public class AnswerHistory implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         AnswerHistory that = (AnswerHistory) o;
         return Objects.equals(AnswerHistoryId, that.AnswerHistoryId) &&
-                Objects.equals(user, that.user) &&
+                Objects.equals(sitecp, that.sitecp) &&
                 Objects.equals(question, that.question) &&
                 Objects.equals(answerRound, that.answerRound) &&
                 Objects.equals(userQuestionAnswerRow, that.userQuestionAnswerRow) &&
@@ -137,6 +137,6 @@ public class AnswerHistory implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(AnswerHistoryId, user, question, answerRound, userQuestionAnswerRow, userQuestionAnswerCol, createdAt);
+        return Objects.hash(AnswerHistoryId, sitecp, question, answerRound, userQuestionAnswerRow, userQuestionAnswerCol, createdAt);
     }
 }

@@ -9,8 +9,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query(value = "SELECT u.* FROM user as u WHERE u.user_uuid = ?1", nativeQuery = true)
-    Optional<User> findByUuid(UUID userUUID);
+    @Query(value = "SELECT ut.* FROM user as ut WHERE ut.user_uuid = ?1", nativeQuery = true)
+    Optional<User> findByUUID(UUID userUUID);
 
     //Optional<User> findByUserUUID(UUID userUUID);
 

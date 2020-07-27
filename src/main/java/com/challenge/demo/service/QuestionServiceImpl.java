@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +26,9 @@ public class QuestionServiceImpl implements QuestionService {
     SiteRepository siteRepository;
 
     @Autowired
+    SitecpRepository sitecpRepository;
+
+    @Autowired
     UserRepository userRepository;
 
     @Autowired
@@ -32,14 +36,14 @@ public class QuestionServiceImpl implements QuestionService {
 
 
     @Override
-    public WholeQuestionDTO getUniqueWholeQuestion(UUID siteUUID, UUID userUUID) {
+    public WholeQuestionDTO getUniqueWholeQuestion(UUID siteUUID, UUID sitecpUUID) {
 
-        User user = getUserByUuid(userUUID);
         Site site = getSiteByUuid(siteUUID);
+        Sitecp sitecp = getSitecpByUuid(sitecpUUID);
 
         //get the list of questions that the user hasn't seen in this round
         List<Question> siteQuestions = getSiteQuestionBySite(site);
-        List<Question> completedQuestions = getCompletedQuestionByUser(user);
+        List<Question> completedQuestions = getCompletedQuestionByUser(sitecp);
 
         List<Question> remainQuestions = new ArrayList<>(siteQuestions);
         remainQuestions.removeAll(completedQuestions);
@@ -67,19 +71,30 @@ public class QuestionServiceImpl implements QuestionService {
         return site;
     }
 
-    public User getUserByUuid(UUID userUUID){
+    public Sitecp getSitecpByUuid(UUID sitecpUUID){
         //get user
-        Optional<User> userFound = userRepository.findByUuid(userUUID);
-        User user = new User();
-        if (userFound.isPresent()) {
-            user = userFound.get();
+//        Optional<User> userFound = userRepository.findByUuid(userUUID);
+//        User user = new User();
+//        if (userFound.isPresent()) {
+//            user = userFound.get();
+//        } else {
+//            //save new user info
+//            user.setUserUUID(userUUID);
+//            user.setCurAnswerRound(1);
+//            user = userRepository.save(user);
+//        }
+//        return user;
+        Optional<Sitecp> sitecpFound = sitecpRepository.findByUuid(sitecpUUID);
+        Sitecp sitecp = new Sitecp();
+        if (sitecpFound.isPresent()) {
+            sitecp = sitecpFound.get();
         } else {
             //save new user info
-            user.setUserUUID(userUUID);
-            user.setCurAnswerRound(1);
-            user = userRepository.save(user);
+            sitecp.setSitecpUUID(sitecpUUID);
+            sitecp.setCurAnswerRound(1);
+            sitecp = sitecpRepository.save(sitecp);
         }
-        return user;
+        return sitecp;
     }
 
     public List<Question> getSiteQuestionBySite(Site site) {
@@ -87,19 +102,31 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository.findSiteQuestions(site.getSiteId()).get();
     }
 
-    public List<Question> getCompletedQuestionByUser(User user) {
-        List<Question> completedQuestions = (List<Question>) answerHistoryRepository
-                .findByUserIdAndAnswerRound(user.getUserId(), user.getCurAnswerRound())
-                .get()
-                .stream()
-                .map(answerHistory -> answerHistory.getQuestion())
-                .collect(Collectors.toList());
+    public List<Question> getCompletedQuestionByUser(Sitecp sitecp) {
+//        List<Question> completedQuestions = (List<Question>) answerHistoryRepository
+//                .findByUserIdAndAnswerRound(sitecp.getUserId(), sitecp.getCurAnswerRound())
+//                .get()
+//                .stream()
+//                .map(answerHistory -> answerHistory.getQuestion())
+//                .collect(Collectors.toList());
+        List<Question> completedQuestions = new ArrayList<>();
+        Optional<List<AnswerHistory>> completedQuestionsFound =
+                answerHistoryRepository.findBySitecpId(sitecp.getSitecpId());
+
+        if (completedQuestionsFound.isPresent()) {
+            completedQuestions = completedQuestionsFound
+                    .get()
+                    .stream()
+                    .map(answerHistory -> answerHistory.getQuestion())
+                    .collect(Collectors.toList());
+        }
 
         return completedQuestions;
     }
 
     public WholeQuestionDTO getWholeQuestion(Question question) {
-        //todo not null check
+        if (question == null)
+            return null;
 
         return  WholeQuestionDTO.build(question, question.getAnswers());
     }

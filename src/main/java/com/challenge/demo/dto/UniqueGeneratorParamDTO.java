@@ -7,16 +7,16 @@ import com.challenge.demo.enums.QuestionType;
 import java.util.UUID;
 
 public class UniqueGeneratorParamDTO {
-    private String userUUID;
+    private String sitecpUUID;
 
     private String siteUUID;
 
-    public String getUserUUID() {
-        return userUUID;
+    public String getsitecpUUID() {
+        return sitecpUUID;
     }
 
-    public void setUserUUID(String userUUID) {
-        this.userUUID = userUUID;
+    public void setsitecpUUID(String sitecpUUID) {
+        this.sitecpUUID = sitecpUUID;
     }
 
     public String getSiteUUID() {

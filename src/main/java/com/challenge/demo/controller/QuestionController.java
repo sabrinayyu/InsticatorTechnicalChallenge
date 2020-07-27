@@ -7,6 +7,7 @@ import com.challenge.demo.dto.WholeQuestionDTO;
 import com.challenge.demo.entity.Question;
 import com.challenge.demo.entity.QuestionAnswer;
 import com.challenge.demo.entity.Site;
+import com.challenge.demo.entity.User;
 import com.challenge.demo.repository.QuestionAnswerRepository;
 import com.challenge.demo.repository.QuestionRepository;
 import com.challenge.demo.repository.SiteRepository;
@@ -39,8 +40,8 @@ public class QuestionController {
 	@Autowired
 	QuestionService questionService;
 
-//	@Autowired
-//	UserRepository userRepository;
+	@Autowired
+	UserRepository userRepository;
 
 	@PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
@@ -135,22 +136,23 @@ public class QuestionController {
 //	}
 
 
-// user table could not be added
-//	@PostMapping("/unique")
-//	public ResponseEntity<WholeQuestionDTO> getUniqueQuestion(@RequestBody UniqueGeneratorParamDTO uniqueGeneratorParamDTO) {
+ //user table could not be added
+	@PostMapping("/unique")
+	public ResponseEntity<WholeQuestionDTO> getUniqueQuestion(@RequestBody UniqueGeneratorParamDTO uniqueGeneratorParamDTO) {
 //		try {
-//			UUID siteUUID = UUID.fromString(uniqueGeneratorParamDTO.getSiteUUID());
-//			UUID userUUID = UUID.fromString(uniqueGeneratorParamDTO.getUserUUID());
-//			System.out.println("1 siteUUID:" + siteUUID);
-//			return ResponseEntity.ok(questionService.getUniqueWholeQuestion(siteUUID, userUUID));
+			UUID siteUUID = UUID.fromString(uniqueGeneratorParamDTO.getSiteUUID());
+			UUID sitecpUUID = UUID.fromString(uniqueGeneratorParamDTO.getsitecpUUID());
+			System.out.println("1 siteUUID:" + siteUUID);
+			return ResponseEntity.ok(questionService.getUniqueWholeQuestion(siteUUID, sitecpUUID));
 //		} catch (NullPointerException e) {
 //			System.out.println("Null in requestBody of /unique ");
+//			return ResponseEntity.badRequest().build();
 //		} catch (Exception e) {
 //			System.out.println("There is something wrong for /questions/unique" + e.getMessage());
 //			return ResponseEntity.badRequest().build();
 //		}
-//
-//	}
+
+	}
 
 	//todo
 	//@PostMapping("/useranswer")
