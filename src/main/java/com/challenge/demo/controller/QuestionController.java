@@ -117,22 +117,5 @@ public class QuestionController {
 	}
 
 
-
-//	@PostMapping("/{siteUUID}/{userUUID}/random")
-//	public ResponseEntity<QuestionDescriptionDTO> getRandomQuestion(@PathVariable(value = "siteUUID") UUID siteUUID, @PathVariable(value = "userUUID") UUID userUUID) {
-//		Site site = siteRepository.findByUuid(siteUUID);
-//		return qaRepository
-//				.findSiteQuestions(site.getSiteId())
-//
-//
-//	}
-
-//	@PostMapping("/{siteUUID}/{userUUID}/random")
-//	public ResponseEntity<List<QuestionAnswer>> getRandomQuestion(@PathVariable(value = "siteUUID") UUID siteUUID, @PathVariable(value = "userUUID") UUID userUUID) {
-//		Site site = siteRepository.findByUuid(siteUUID);
-//		return qaRepository
-//				.findBysiteId(site.getSiteId())
-//				.map(questionAnswer -> ResponseEntity.ok(questionAnswer))
-//				.orElseGet(() -> ResponseEntity.notFound().build());;
-//	}
+	
 }
