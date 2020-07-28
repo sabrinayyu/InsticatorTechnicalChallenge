@@ -13,6 +13,9 @@ public interface AnswerHistoryRepository extends JpaRepository<AnswerHistory, Lo
     @Query(value = "SELECT ah.* FROM answer_history as ah WHERE ah.sitecp_id = ?1 AND ah.answer_round = ?2", nativeQuery = true)
     Optional<List<AnswerHistory>> findByUserIdAndAnswerRound(Long userId, Integer answerRound);
 
+//    @Query(value = "SELECT count(ah.*) FROM answer_history as ah WHERE ah.sitecp_id = ?1 AND ah.answer_round = ?2 AND ah.question_id = ?3", nativeQuery = true)
+//    Integer findByUserIdAndAnswerRoundAndQuestionId(Long userId, Integer answerRound, Long questionId);
+
     @Query(value = "SELECT ah.* FROM answer_history as ah WHERE ah.sitecp_id = ?1", nativeQuery = true)
     Optional<List<AnswerHistory>> findBySitecpId(Long sitecpId);
 

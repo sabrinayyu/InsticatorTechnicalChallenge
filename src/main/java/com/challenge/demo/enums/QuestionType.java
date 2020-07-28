@@ -11,14 +11,15 @@ import java.util.Map;
 public enum QuestionType {
     /**
      * question type
-     * correctAnswerMin:
+     *
+     * each question could at most have [correctAnswerMin, correctAnswerMax] correct answer
      *
      */
 
-    TRIVIA (1, 1),
-    POLL (2, 4),
-    CHECKBOX (0, 0),
-    MATRIX(0, 0);
+    TRIVIA (1, 2, 4),
+    POLL (0, 2,4),
+    CHECKBOX (0, 1, 10),
+    MATRIX(0, 1, 999999);
 
     private static Map<String, QuestionType> questionTypeMap = new HashMap<String, QuestionType>(3);
 
@@ -31,11 +32,11 @@ public enum QuestionType {
 
     @JsonCreator
     public static QuestionType forValue (String value) throws NoSuchFieldException {
-
+        value = StringUtils.lowerCase(value);
         if (!questionTypeMap.containsKey(value))
             throw new NoSuchFieldException("wrong question type!");
 
-        return questionTypeMap.get(StringUtils.lowerCase(value));
+        return questionTypeMap.get(value);
     }
 
     @JsonValue
@@ -48,20 +49,28 @@ public enum QuestionType {
         return null; // or fail
     }
 
-    private int correctAnswerMin;
-    private int correctAnswerMax;
+    private Integer correctAnswer;
 
-    private QuestionType(int correctAnswerMin, int correctAnswerMax) {
-        this.correctAnswerMin = correctAnswerMin;
-        this.correctAnswerMax = correctAnswerMax;
+    private Integer AnswerMin;
+
+    private Integer AnswerMax;
+    QuestionType(Integer correctAnswer, Integer answerMin, Integer answerMax) {
+        this.correctAnswer = correctAnswer;
+        AnswerMin = answerMin;
+        AnswerMax = answerMax;
     }
 
-    public int getCorrectAnswerMax() {
-        return correctAnswerMax;
+    public Integer getCorrectAnswer() {
+        return correctAnswer;
     }
 
-    public int getCorrectAnswerMin() {
-        return correctAnswerMin;
+    public Integer getAnswerMin() {
+        return AnswerMin;
     }
+
+    public Integer getAnswerMax() {
+        return AnswerMax;
+    }
+
 
 }
