@@ -35,5 +35,5 @@ No change for basic setting.
 
 **Database Encryption and Data exposure:** to make sure the database is secure. We need to encrypt sensitive data like passwords (maybe in the user table in the future).  We should not expose database configuration. Instead we should set  environment variables in the production or testing environment. A robust test, build and deploy workflow is needed to eliminate bugs or security concerns.
 
-**More: ** We can bring up multiple backend servers to serve the clients and add read write lock on database so that user won't get wrong data. Also, we can partition the database by question type. 
+**More:** We can bring up multiple backend servers to serve the clients and add read write lock on database so that user won't get wrong data. Also, we can partition the database by question type. 
 
