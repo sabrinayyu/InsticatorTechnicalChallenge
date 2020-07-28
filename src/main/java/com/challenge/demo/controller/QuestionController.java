@@ -5,7 +5,6 @@ import com.challenge.demo.entity.*;
 import com.challenge.demo.repository.QuestionAnswerRepository;
 import com.challenge.demo.repository.QuestionRepository;
 import com.challenge.demo.repository.SiteRepository;
-import com.challenge.demo.repository.UserRepository;
 import com.challenge.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,8 +31,6 @@ public class QuestionController {
 	@Autowired
 	QuestionService questionService;
 
-	@Autowired
-	UserRepository userRepository;
 
 	@PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
@@ -136,11 +133,20 @@ public class QuestionController {
 			UUID siteUUID = UUID.fromString(postUniqueDTO.getSiteUUID());
 			UUID sitecpUUID = UUID.fromString(postUniqueDTO.getSitecpUUID());
 			WholeQuestionDTO result = questionService.getUniqueWholeQuestion(siteUUID, sitecpUUID);
+
+			// no question stored for the site
+			if (result == null) {
+				System.out.println("No question stored for the site /questions/unique ");
+				return ResponseEntity.noContent().build();
+			}
+
 			return new ResponseEntity<>(result, HttpStatus.CREATED);
 		} catch (NullPointerException e) {
+			e.printStackTrace();
 			System.out.println("Null in requestBody of /questions/unique ");
 			return ResponseEntity.badRequest().build();
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("There is something wrong for /questions/unique " + e.getMessage());
 			return ResponseEntity.notFound().build();
 		}
@@ -158,9 +164,11 @@ public class QuestionController {
 
 			return new ResponseEntity<>(postUserAnswerDTO, HttpStatus.CREATED);
 		} catch (NullPointerException e) {
+			e.printStackTrace();
 			System.out.println("Null in requestBody of /questions/useranswer ");
 			return ResponseEntity.badRequest().build();
-		} catch (Exception e) {
+		}catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("There is something wrong for /questions/useranswer " + e.getMessage());
 			return ResponseEntity.notFound().build();
 		}

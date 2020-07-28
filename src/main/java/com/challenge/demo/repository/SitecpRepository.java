@@ -13,5 +13,4 @@ public interface SitecpRepository extends JpaRepository<Sitecp, Long> {
     @Query(value = "SELECT sc.* FROM Sitecp as sc WHERE sc.sitecp_uuid = ?1", nativeQuery = true)
     Optional<Sitecp> findByUuid(UUID sitecpUUID);
 
-    //Optional<Sitecp> findByUUID(UUID );
 }

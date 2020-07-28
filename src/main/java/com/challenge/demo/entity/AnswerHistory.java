@@ -52,21 +52,31 @@ public class AnswerHistory implements Serializable {
 
     // the row answer chosen by the user
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false, name = "user_question_answer_id_row", referencedColumnName = "question_answer_id")
+    @JoinColumn(name = "user_question_answer_id_row", referencedColumnName = "question_answer_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private QuestionAnswer userQuestionAnswerRow;
 
     // the col answer chosen by the user
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_question_answer_id_col", referencedColumnName = "question_answer_id")
+    @JoinColumn(nullable = false, name = "user_question_answer_id_col", referencedColumnName = "question_answer_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private QuestionAnswer userQuestionAnswerCol;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
-
     private Date createdAt;
+
+    public AnswerHistory (){
+    }
+
+    public AnswerHistory (Sitecp sitecp, Question question, Integer answerRound, QuestionAnswer questionAnswerRow, QuestionAnswer questionAnswerCol){
+        this.sitecp = sitecp;
+        this.question = question;
+        this.answerRound = answerRound;
+        this.userQuestionAnswerRow = questionAnswerRow;
+        this.userQuestionAnswerCol = questionAnswerCol;
+    }
 
     public Long getAnswerHistoryId() {
         return AnswerHistoryId;

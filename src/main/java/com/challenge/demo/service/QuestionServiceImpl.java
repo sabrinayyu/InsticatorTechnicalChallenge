@@ -3,6 +3,7 @@ package com.challenge.demo.service;
 import com.challenge.demo.dto.AnswerColRowDTO;
 import com.challenge.demo.dto.WholeQuestionDTO;
 import com.challenge.demo.entity.*;
+import com.challenge.demo.enums.QuestionType;
 import com.challenge.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,9 +27,6 @@ public class QuestionServiceImpl implements QuestionService {
     SitecpRepository sitecpRepository;
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
     AnswerHistoryRepository answerHistoryRepository;
 
 
@@ -41,6 +39,10 @@ public class QuestionServiceImpl implements QuestionService {
         //get the list of questions that the user hasn't seen in this round
         List<Question> siteQuestions = getSiteQuestionBySite(site);
         List<Question> completedQuestions = getCompletedQuestionByUser(sitecp);
+
+        //if there is 0 question set for one site, we can not return a question, so return null
+        if (siteQuestions.size() == 0)
+            return null;
 
         List<Question> remainQuestions = new ArrayList<>(siteQuestions);
         remainQuestions.removeAll(completedQuestions);
@@ -70,18 +72,28 @@ public class QuestionServiceImpl implements QuestionService {
 
         List<AnswerHistory> answerHistories = new ArrayList<>();
         for (AnswerColRowDTO answerColRowDTO : userAnswers) {
-            //prepare all attributes
-            QuestionAnswer questionAnswerRow = getQAbyQuestionAnswerId(answerColRowDTO.getAnswerRowId());
+//            //this problem in has achieved maximum number of correct answer in current round
+//            Integer answerCount = answerHistoryRepository
+//                    .findByUserIdAndAnswerRoundAndQuestionId(sitecp.getSitecpId(), answerRound, questionId);
+//            if (answerCount < question.getType().getAnswerMin() || answerCount > question.getType().getAnswerMax())
+//                throw new IllegalArgumentException("The number of the user's questionAnswer for this question is out of range");
+
+            //prepare all attributes for AnswerHistory
+            QuestionAnswer questionAnswerRow = null;
             QuestionAnswer questionAnswerCol = getQAbyQuestionAnswerId(answerColRowDTO.getAnswerColId());
 
+            if (question.getType() == QuestionType.MATRIX) {
+                questionAnswerRow = getQAbyQuestionAnswerId(answerColRowDTO.getAnswerRowId());
+            }
+
+
+            //validate questionAnswer is in row / col
+            if (questionAnswerCol.getIsRowOption() || (questionAnswerRow != null && !questionAnswerRow.getIsRowOption())) {
+                throw new IllegalArgumentException("The questionAnswer is not for row/col");
+            }
 
             //save new Record in ANSWERHISTORY table
-            AnswerHistory answerHistory = new AnswerHistory();
-            answerHistory.setQuestion(question);
-            answerHistory.setUserId(sitecp);
-            answerHistory.setUserQuestionAnswerRow(questionAnswerRow);
-            answerHistory.setUserQuestionAnswerCol(questionAnswerCol);
-            answerHistory.setAnswerRound(answerRound);
+            AnswerHistory answerHistory = new AnswerHistory(sitecp, question, answerRound, questionAnswerRow, questionAnswerCol);
             answerHistory = answerHistoryRepository.save(answerHistory);
 
             answerHistories.add(answerHistory);
@@ -91,6 +103,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     public QuestionAnswer getQAbyQuestionAnswerId(Long questionAnswerId) {
+
         Optional<QuestionAnswer> questionAnswerFound =
                 questionAnswerRepository.findQAByQuestionAnswerId(questionAnswerId);
         QuestionAnswer questionAnswer = new QuestionAnswer();
@@ -127,18 +140,6 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     public Sitecp getSitecpByUuid(UUID sitecpUUID){
-        //get user
-//        Optional<User> userFound = userRepository.findByUuid(userUUID);
-//        User user = new User();
-//        if (userFound.isPresent()) {
-//            user = userFound.get();
-//        } else {
-//            //save new user info
-//            user.setUserUUID(userUUID);
-//            user.setCurAnswerRound(1);
-//            user = userRepository.save(user);
-//        }
-//        return user;
         Optional<Sitecp> sitecpFound = sitecpRepository.findByUuid(sitecpUUID);
         Sitecp sitecp = new Sitecp();
         if (sitecpFound.isPresent()) {
@@ -158,12 +159,6 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     public List<Question> getCompletedQuestionByUser(Sitecp sitecp) {
-//        List<Question> completedQuestions = (List<Question>) answerHistoryRepository
-//                .findByUserIdAndAnswerRound(sitecp.getUserId(), sitecp.getCurAnswerRound())
-//                .get()
-//                .stream()
-//                .map(answerHistory -> answerHistory.getQuestion())
-//                .collect(Collectors.toList());
         List<Question> completedQuestions = new ArrayList<>();
         Optional<List<AnswerHistory>> completedQuestionsFound =
                 answerHistoryRepository.findByUserIdAndAnswerRound(sitecp.getSitecpId(),sitecp.getCurAnswerRound());
